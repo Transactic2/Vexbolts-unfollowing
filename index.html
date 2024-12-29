@@ -32,11 +32,10 @@
     <script>
         function updateTimer() {
             const now = new Date();
-            const options = { timeZone: 'America/New_York', hour12: false };
-            const formatter = new Intl.DateTimeFormat('en-US', options);
-            const currentTimeInFlorida = new Date(formatter.format(now));
+
+            const floridaTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
             const targetTime = new Date('2024-12-31T23:59:00-05:00');
-            const diff = targetTime - currentTimeInFlorida;
+            const diff = targetTime - floridaTime;
 
             if (diff <= 0) {
                 document.getElementById('timer').textContent = 'UNFOLLOW!!!';
