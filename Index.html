@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vexbolts Live Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .countdown, .follower-info {
+            margin: 20px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vexbolts Live Follower Tracker</h1>
+    <div class="countdown">Time Remaining: <span id="timer"></span></div>
+
+    <!-- Embed Live Follower Count -->
+    <div class="follower-info">
+        <iframe 
+            height="80px" 
+            width="300px" 
+            frameborder="0" 
+            src="https://livecounts.io/embed/tiktok-live-follower-counter/vexbolts" 
+            style="border: 0; width:300px; height:80px;">
+        </iframe>
+        <p>Net Gain/Loss: <span id="net-change">0</span></p>
+    </div>
+
+    <script>
+        // Countdown Timer
+        function updateTimer() {
+            const now = new Date();
+            const targetTime = new Date();
+            targetTime.setHours(23, 59, 0, 0);
+            if (now > targetTime) targetTime.setDate(targetTime.getDate() + 1);
+
+            const diff = targetTime - now;
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('timer').textContent = 
+                `${hours}h ${minutes}m ${seconds}s`;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // Net Gain/Loss (Mock Calculation)
+        let initialFollowers = 0; // Replace with a real initial value if available.
+        function updateNetChange(currentFollowers) {
+            if (initialFollowers === 0) {
+                initialFollowers = currentFollowers; // Set initial value
+            }
+            const netChange = currentFollowers - initialFollowers;
+            document.getElementById('net-change').textContent = netChange;
+        }
+
+        // You'd need a way to pass the live count to updateNetChange(currentFollowers).
+    </script>
+</body>
+</html>
